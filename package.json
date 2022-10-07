@@ -4,9 +4,12 @@
   "description": "",
   "main": "src/pugin.js",
   "dependencies": {
-    "commander": "^9.4.1"
+    "commander": "^9.4.1",
+    "got": "^12.5.1",
+    "node-fetch": "^3.2.10"
   },
   "devDependencies": {
+    "@types/node": "^18.8.3",
     "prettier": "^2.7.1",
     "typescript": "^4.8.4"
   },
@@ -19,5 +22,5 @@
   "bin": {
     "pugin": "bin/pugin.js"
   },
-  "type": "commonjs"
+  "type": "module"
 }
