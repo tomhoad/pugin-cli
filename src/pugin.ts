@@ -13,7 +13,7 @@ function init() {
       const divisions = await getAllDivisions();
 
       const divisionsObj = divisions.map((division) => ({
-        name: `[${division.Date}] ${division.Title}`,
+        name: `[${formatISODateTime(division.Date)}] ${division.Title}`,
         value: division.DivisionId,
       }));
 
@@ -25,7 +25,7 @@ function init() {
  |_|    \\__,_|\\__, |_|_| |_|
               |___/         
 
-~~ The Parliamentary CLI v0.2.3 ~~
+~~ The Parliamentary CLI v0.2.4 ~~
     `);
 
       inquirer
