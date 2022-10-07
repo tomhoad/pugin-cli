@@ -1,7 +1,7 @@
 {
   "name": "pugin-cli",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "The Parliamentary CLI",
   "main": "src/pugin.js",
   "dependencies": {
     "commander": "^9.4.1",
