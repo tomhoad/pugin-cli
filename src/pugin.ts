@@ -25,7 +25,7 @@ function init() {
  |_|    \\__,_|\\__, |_|_| |_|
               |___/         
 
-~~ The Parliamentary CLI v0.2.2 ~~
+~~ The Parliamentary CLI v0.2.3 ~~
     `);
 
       inquirer
