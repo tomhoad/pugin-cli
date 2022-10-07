@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { program } from "commander";
-import got from "got";
 import inquirer from "inquirer";
-import { groupBy } from "lodash-es";
 import { table } from "table";
+import { summaryTableConfig, resultsTableConfig } from "./tables.js";
+import { getDivisionResult, getAllDivisions } from "./api.js";
+import { groupVotesByParty, formatISODateTime } from "./utils.js";
 program
     .command("divisions")
     .description("Displays a list of recent divisions")
@@ -42,49 +43,27 @@ program
     })
         .then((answers) => __awaiter(void 0, void 0, void 0, function* () {
         const division = yield getDivisionResult(answers.Divisions);
-        const ayePartyGroups = groupBy(division.Ayes, "Party");
-        const noePartyGroups = groupBy(division.Noes, "Party");
-        console.log(`Results for the division "${division.Title}...`);
-        console.log("------------------------------");
-        console.log(`The division was held on ${formatISODateTime(division.Date)}`);
-        console.log(`👍 Ayes: ${division.AyeCount}`);
-        console.log(`👎 Noes: ${division.NoCount}`);
-        console.log("------------------------------");
-        console.log("Vote Breakdown:");
+        const ayePartyGroups = groupVotesByParty(division.Ayes);
+        const noePartyGroups = groupVotesByParty(division.Noes);
         let ayeTable = [];
         let noeTable = [];
-        ayeTable.push(["Aye Votes", ""]);
-        noeTable.push(["Noe Votes", ""]);
+        const summaryTable = [
+            [division.Title.toUpperCase(), ""],
+            [`Held on ${formatISODateTime(division.Date)}`, ""],
+            ["👍 Ayes", division.AyeCount],
+            ["👎 Noes", division.NoCount],
+        ];
+        ayeTable.push(["👍 Aye Votes 👍", ""]);
+        noeTable.push(["👎 Noe Votes 👎", ""]);
         for (const [party, value] of Object.entries(ayePartyGroups)) {
             ayeTable.push([party, value.length.toString()]);
         }
         for (const [party, value] of Object.entries(noePartyGroups)) {
             noeTable.push([party, value.length.toString()]);
         }
-        console.log(table(ayeTable, {
-            header: {
-                alignment: "center",
-                content: "👍 Ayes",
-            },
-        }));
-        console.log(table(noeTable, {
-            header: {
-                alignment: "center",
-                content: "👎 Noes",
-            },
-        }));
+        console.log(table(summaryTable, summaryTableConfig));
+        console.log(table(ayeTable, resultsTableConfig));
+        console.log(table(noeTable, resultsTableConfig));
     }));
 }));
-const getAllDivisions = () => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield got.get("https://commonsvotes-api.parliament.uk/data/divisions.json/search", { responseType: "json" });
-    return res.body;
-});
-const getDivisionResult = (divisionId) => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield got.get(`https://commonsvotes-api.parliament.uk/data/division/${divisionId}.json`, { responseType: "json" });
-    return res.body;
-});
-const formatISODateTime = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB");
-};
 program.parse();
