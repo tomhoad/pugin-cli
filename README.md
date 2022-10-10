@@ -8,7 +8,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/pugin">
     <img src="https://badge.fury.io/js/pugin.svg"
-         alt="Gitter">
+         alt="Pugin">
   </a>
 </p>
 
@@ -20,12 +20,8 @@ Pugin is the Parliamentary CLI. It allows you to programatically query [API data
 
 ## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
-
 ```bash
 $ npm i -g pugin
-
-# Go into the repository
 $ pugin <command>
 ```
 
