@@ -1,6 +1,6 @@
 {
   "name": "pugin",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "The Parliamentary CLI",
   "main": "dist/pugin.js",
   "type": "module",
